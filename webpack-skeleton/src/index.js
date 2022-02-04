@@ -24,16 +24,20 @@ button.onclick = function () { // all the calculation happens here
     let text = resultOf(getFirstNumber(), getSecondNumber(), getOperation())
 
     if(getOperation() == "+"){
-        alert(text + getFirstNumber()+getSecondNumber()); //alerts result
+        let result = getFirstNumber()+getSecondNumber();
+        alert(text + result); //alerts result
     }
     if(getOperation() == "-"){
-        alert(text + getFirstNumber()-getSecondNumber());
+        let result = getFirstNumber()-getSecondNumber()
+        alert(text + result);
     }
     if(getOperation() == "/"){
-        alert(text + getFirstNumber()/getSecondNumber());
+        let result = getFirstNumber()/getSecondNumber();
+        alert(text + result);
     }
     if(getOperation() == "*"){
-        alert(text + getFirstNumber()*getSecondNumber());
+        let result = getFirstNumber()*getSecondNumber();
+        alert(text + result);
     }
 }
 
