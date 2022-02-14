@@ -63,30 +63,30 @@ class CalcBrain{
             console.log("ples")
             this.setPlusTrueOthersFalse()
             if(this.plus == true && this.numberOne != null && this.numberTwo != null && this.result == null){
-                this.result = this.numberOne + this.numberTwo;
+                this.result = parseFloat(this.numberOne) + parseFloat(this.numberTwo);
                 return this.result;
             }else if (this.plus == true && this.numberOne != null && this.numberTwo != null && this.result != null && this.additionalNumber != null){
-                this.result = this.result + this.additionalNumber;
+                this.result = parseFloat(this.result) + parseFloat(this.additionalNumber);
                 this.additionalNumber = null;
                 return this.result;
             }
         }else if(operation == 'divide'){
             this.setDivideTrueOthersFalse()
             if(this.divide == true && this.numberOne != null && this.numberTwo != null && this.result == null){
-                this.result = this.numberOne / this.numberTwo;
+                this.result = parseFloat(this.numberOne) / parseFloat(this.numberTwo);
                 return this.result;
             }else if (this.divide == true && this.numberOne != null && this.numberTwo != null && this.result != null && this.additionalNumber != null){
-                this.result = this.result / this.additionalNumber;
+                this.result = parseFloat(this.result) / parseFloat(this.additionalNumber);
                 this.additionalNumber = null;
                 return this.result;
             }
         }else if(operation == 'multiply'){
             this.setMultiplyTrueOthersFalse()
             if(this.multiply == true && this.numberOne != null && this.numberTwo != null && this.result == null){
-                this.result = this.numberOne * this.numberTwo;
+                this.result = parseFloat(this.numberOne) * parseFloat(this.numberTwo);
                 return this.result;
             }else if (this.multiply == true && this.numberOne != null && this.numberTwo != null && this.result != null && this.additionalNumber != null){
-                this.result = this.result * this.additionalNumber;
+                this.result = parseFloat(this.result) * parseFloat(this.additionalNumber);
                 this.additionalNumber = null;
                 return this.result;
             }
@@ -145,25 +145,12 @@ class CalcBrain{
         this.multiply = false;
     }
 
-    getMathObj(){
-        // let obj = Object.assign({},this.numberOne, this.numberTwo, this.result, this.additionalNumber);
-        // return obj;
-    }
+
 
 }
-let mathObj = {
-    'numberOne': null,
-    'numberTwo': null,
-    'result': null,
-    'additionalNumber': null
-};
-let operationClicked ={
-    'plus': false,
-    'minus': false,
-    'divide': false,
-    'multiply':false
-}
-function view(){
+
+
+function MainView(btns){
     let content = document.createElement('div');
     content.classList = "card text-center w-50";
     content.style.margin = "auto";
@@ -183,7 +170,7 @@ function view(){
     btnGroup.classList = "btn-group w-100 justify-content-center";
     btnGroup.id = "quickmath";
 
-    btnGroup.innerHTML= numberButtonsView();
+    btnGroup.innerHTML= btns;
     body.append(btnGroup);
 
     let footer = document.createElement('div');
@@ -238,20 +225,19 @@ function view(){
 
     return content;
 }
-
-function numberButtonsView() {
+function NumberButtonsView() {
     let numberButtons = "";
     let iter = 0;
     for (let i = 0; i < 3; i++) {
         numberButtons = numberButtons + '<div class="btn-group-vertical w-100">';
-            for(let j = 0; j < 3; j++){
+        for(let j = 0; j < 3; j++){
+            numberButtons = numberButtons + `<button class="btn btn-primary num" value="${iter}" number="${iter}">${iter}</button>`
+            iter++;
+            if(iter == 8){
                 numberButtons = numberButtons + `<button class="btn btn-primary num" value="${iter}" number="${iter}">${iter}</button>`
                 iter++;
-                if(iter == 8){
-                    numberButtons = numberButtons + `<button class="btn btn-primary num" value="${iter}" number="${iter}">${iter}</button>`
-                    iter++;
-                }
             }
+        }
         numberButtons = numberButtons + '</div>';
     }
 
@@ -260,11 +246,9 @@ function numberButtonsView() {
 }
 
 
-
-class GameController {
-    constructor(calcBrain, view) {
+class CalcController {
+    constructor(calcBrain) {
         this.calc = calcBrain
-        this.view = view
     }
     showNum(num){
         if(num!= null) {
@@ -275,50 +259,56 @@ class GameController {
         }
 
     }
-    isFloat(n) {
-        return n === +n && n !== (n|0);
-    }
+
     setValues(event = null, dot = false){
         let number;
         if(event != null){
-        number =  parseFloat(event.target.closest('.num').getAttribute('number'));
+            number =  parseFloat(event.target.closest('.num').getAttribute('number'));
         }
         if(this.calc.getNumberOne() == null){
-                this.calc.setNumberOne(number);
-                this.showNum(number)
+            this.calc.setNumberOne(number+"");
+            this.showNum(number)
         }else if(this.calc.getPlus() == false && this.calc.getMinus() == false && this.calc.getDivide() == false && this.calc.getMultiply() == false && this.calc.getNumberOne() != null && this.calc.getResult() == null){
-           let numStr = this.calc.getNumberOne() +""+number;
-           this.calc.setNumberOne(parseFloat(numStr))
-            this.showNum(numStr)
-            // mathObj.numberOne += number +"";
-            // mathObj.numberOne = parseFloat(mathObj.numberOne)
+            if(dot == true && this.calc.getNumberOne().indexOf(".") <= -1 ){
+                let numStr = this.calc.getNumberOne() +".";
+                this.calc.setNumberOne(numStr)
+                this.showNum(numStr)
+            }else if(typeof number == 'number'){
+                let numStr = this.calc.getNumberOne() + "" + number;
+                this.calc.setNumberOne(numStr)
+                this.showNum(numStr)
+            }
         }
         if(this.calc.getNumberTwo() == null && (this.calc.getPlus() == true || this.calc.getMinus() == true || this.calc.getDivide() == true || this.calc.getMultiply() == true) && this.calc.getResult() == null){
-            this.calc.setNumberTwo(number);
+            this.calc.setNumberTwo(number+"");
             this.showNum(number)
         }else if((this.calc.getPlus() == true || this.calc.getMinus() == true || this.calc.getDivide() == true || this.calc.getMultiply() == true)  && this.calc.getNumberTwo() != null && this.calc.getResult() == null){
-            let numStr = this.calc.getNumberTwo() + "" + number;
-            this.calc.setNumberTwo(parseFloat(numStr));
-            this.showNum(numStr)
-            // mathObj.numberTwo += number +"";
-            // mathObj.numberTwo = parseFloat(mathObj.numberTwo)
+            if(dot == true && this.calc.getNumberTwo().indexOf(".") <= -1 ){
+                let numStr = this.calc.getNumberTwo() +".";
+                this.calc.setNumberTwo(numStr)
+                this.showNum(numStr)
+            }else if(typeof number == 'number') {
+                let numStr = this.calc.getNumberTwo() + "" + number;
+                this.calc.setNumberTwo(numStr);
+                this.showNum(numStr)
+            }
         }
 
         if(this.calc.getResult() != null && (this.calc.getPlus() == true || this.calc.getMinus() == true || this.calc.getDivide() == true || this.calc.getMultiply() == true)  && this.calc.getAdditionalNumber() == null){
-            // mathObj.additionalNumber = number;
-            // mathObj.additionalNumber = parseFloat(mathObj.additionalNumber)
             console.log('here')
-            this.calc.setAdditionalNumber(number);
+            this.calc.setAdditionalNumber(number+"");
             this.showNum(number)
         }else if(this.calc.getResult() != null && (this.calc.getPlus() == true || this.calc.getMinus() == true || this.calc.getDivide() == true || this.calc.getMultiply() == true)  && this.calc.getAdditionalNumber() != null){
-            console.log(this.calc.getAdditionalNumber())
-            let numStr = this.calc.getAdditionalNumber() + "" + number;
-            this.calc.setAdditionalNumber(parseFloat(numStr));
-            this.showNum(numStr)
-            // mathObj.additionalNumber += number + "";
-            // mathObj.additionalNumber = parseFloat(mathObj.additionalNumber)
+            if(dot == true && this.calc.getAdditionalNumber().indexOf(".") <= -1 ){
+                let numStr = this.calc.getAdditionalNumber() +".";
+                this.calc.setAdditionalNumber(numStr)
+                this.showNum(numStr)
+            }else if(typeof number == 'number') {
+                let numStr = this.calc.getAdditionalNumber() + "" + number;
+                this.calc.setAdditionalNumber(numStr);
+                this.showNum(numStr)
+            }
         }
-        //console.log(this.calc.getMathObj())
     }
 
     doCalculations(operation){
@@ -331,20 +321,21 @@ class GameController {
     }
 
 }
-let viewer = view();
+
+let btnsView = NumberButtonsView();
+let viewer = MainView(btnsView);
 
 let my_calc = new CalcBrain();
-let my_controller = new GameController(my_calc, viewer);
+let my_controller = new CalcController(my_calc);
 document.querySelector('.container').appendChild(viewer)
-// document.body.append(viewer)
 
 document.querySelector('#quickmath').addEventListener("click", (e) =>{
     my_controller.setValues(e)
 })
-//
-// document.querySelector('#dot').addEventListener("click", (e) =>{
-//     my_controller.setValues(null, true)
-// })
+
+document.querySelector('#dot').addEventListener("click", (e) =>{
+    my_controller.setValues(null, true)
+})
 
 
 document.querySelector('#plusik').onclick = function (){
