@@ -14,7 +14,7 @@ export default class CalcController {
     }
 
     setValues(event = null, dot = false) {
-        let number;
+        let number = 0;
         if (event != null) {
             number = parseFloat(event.target.closest('.num').getAttribute('number'));
         }

@@ -53,7 +53,7 @@ export default function MainView(btns) {
     let todefault = document.createElement('button');
     todefault.classList = "btn btn-warning";
     todefault.id = "todefault";
-    todefault.innerText = "C";
+    todefault.innerText = "AC";
 
     let dot = document.createElement('button');
     dot.classList = "btn btn-secondary";
