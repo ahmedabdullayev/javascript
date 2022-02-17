@@ -68,6 +68,12 @@ export default function MainView(btns) {
     toplusorminus.id = "toplusorminus";
     toplusorminus.innerText = "+/-";
 
+    let clearnum = document.createElement('button');
+    clearnum.classList = "btn btn-warning";
+    clearnum.style.marginLeft = "5px"
+    clearnum.id = "clearnum";
+    clearnum.innerText = "C";
+
     footer.append(dot)
     footer.append(toplusorminus)
     footer.append(plus)
@@ -76,6 +82,7 @@ export default function MainView(btns) {
     footer.append(multiply)
     footer.append(equals)
     footer.append(todefault)
+    footer.append(clearnum)
 
     content.append(footer)
 

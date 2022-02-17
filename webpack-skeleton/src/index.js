@@ -13,12 +13,14 @@ document.querySelector('.container').appendChild(viewer)
 document.querySelector('#quickmath').addEventListener("click", (e) => {
     my_controller.setValues(e, false, false)
 })
-
 document.querySelector('#dot').addEventListener("click", (e) => {
     my_controller.setValues(null, true, false)
 })
 document.querySelector('#toplusorminus').onclick= function (){
     my_controller.setValues(null, false, true)
+}
+document.querySelector('#clearnum').onclick= function (){
+    my_controller.setValues(null, false, false, true)
 }
 
 document.querySelector('#plusik').onclick = function () {

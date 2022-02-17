@@ -82,6 +82,35 @@ export default class CalcBrain {
         }
         return "";
     }
+    clearNumber(number){
+        if(number == "first" && this.numberOne != null) {
+            if (this.numberOne.replace(/\D/g,'').length > 1) {
+                this.numberOne = this.numberOne.substring(0, this.numberOne.length - 1)
+            } else {
+                this.numberOne = "0";
+            }
+            return this.numberOne
+        }
+        if(number == "second" && this.numberTwo != null) {
+            if (this.numberTwo.replace(/\D/g,'').length > 1) {
+                this.numberTwo = this.numberTwo.substring(0, this.numberTwo.length - 1)
+            } else {
+                this.numberTwo = "0";
+            }
+            return this.numberTwo
+        }
+        if(number == "additional" && this.additionalNumber != null) {
+            if (this.additionalNumber.replace(/\D/g,'').length > 1) {
+                this.additionalNumber = this.additionalNumber.substring(0, this.additionalNumber.length - 1)
+            } else {
+                this.additionalNumber = "0";
+            }
+            return this.additionalNumber
+        }
+
+        return "";
+
+    }
     doMath(operation) {
         if (operation == 'minus') {
             this.setMinusTrueOthersFalse()
