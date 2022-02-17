@@ -52,16 +52,24 @@ export default function MainView(btns) {
 
     let todefault = document.createElement('button');
     todefault.classList = "btn btn-warning";
+    todefault.style.marginLeft = "5px";
     todefault.id = "todefault";
     todefault.innerText = "AC";
 
     let dot = document.createElement('button');
     dot.classList = "btn btn-secondary";
-    dot.style.marginRight = "30px";
+    dot.style.marginRight = "5px";
     dot.id = "dot";
     dot.innerText = ".";
 
+    let toplusorminus = document.createElement('button');
+    toplusorminus.classList = "btn btn-secondary";
+    toplusorminus.style.marginRight = "10px";
+    toplusorminus.id = "toplusorminus";
+    toplusorminus.innerText = "+/-";
+
     footer.append(dot)
+    footer.append(toplusorminus)
     footer.append(plus)
     footer.append(divide)
     footer.append(minus)

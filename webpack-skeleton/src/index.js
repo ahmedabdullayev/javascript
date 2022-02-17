@@ -11,13 +11,15 @@ let my_controller = new CalcController(my_calc);
 document.querySelector('.container').appendChild(viewer)
 
 document.querySelector('#quickmath').addEventListener("click", (e) => {
-    my_controller.setValues(e)
+    my_controller.setValues(e, false, false)
 })
 
 document.querySelector('#dot').addEventListener("click", (e) => {
-    my_controller.setValues(null, true)
+    my_controller.setValues(null, true, false)
 })
-
+document.querySelector('#toplusorminus').onclick= function (){
+    my_controller.setValues(null, false, true)
+}
 
 document.querySelector('#plusik').onclick = function () {
     my_controller.doCalculations('plus')
@@ -34,6 +36,7 @@ document.querySelector('#divide').onclick = function () {
 document.querySelector('#todefault').onclick = function () {
     my_controller.toDefaultValues()
 }
+
 
 document.querySelector('#equals').onclick = function () {
     my_controller.doCalculations(my_calc.getLastOperation());

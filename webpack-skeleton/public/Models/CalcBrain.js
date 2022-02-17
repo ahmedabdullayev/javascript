@@ -55,15 +55,42 @@ export default class CalcBrain {
         this.multiply = false
         this.lastOperation = '';
     }
-
+    changeNumberNegativeOrPositive(number){
+        if(number == "first" && this.numberOne != null) {
+            if (this.numberOne.indexOf("-") >= 0) {
+                this.numberOne = this.numberOne.substring(1)
+            } else {
+                this.numberOne = "-" + this.numberOne
+            }
+            return this.numberOne
+        }
+        if(number == "second" && this.numberTwo != null) {
+            if (this.numberTwo.indexOf("-") >= 0) {
+                this.numberTwo = this.numberTwo.substring(1)
+            } else {
+                this.numberTwo = "-" + this.numberTwo
+            }
+            return this.numberTwo
+        }
+        if(number == "additional" && this.additionalNumber != null) {
+            if (this.additionalNumber.indexOf("-") >= 0) {
+                this.additionalNumber = this.additionalNumber.substring(1)
+            } else {
+                this.additionalNumber = "-" + this.additionalNumber
+            }
+            return this.additionalNumber
+        }
+        return "";
+    }
     doMath(operation) {
         if (operation == 'minus') {
             this.setMinusTrueOthersFalse()
             if (this.minus == true && this.numberOne != null && this.numberTwo != null && this.result == null) {
-                this.result = this.numberOne - this.numberTwo;
+                this.result = parseFloat(this.numberOne) - parseFloat(this.numberTwo);
                 return this.result;
-            } else if (this.minus == true && this.numberOne != null && this.numberTwo != null && this.result != null) {
-                this.result = this.result - this.additionalNumber;
+            } else if (this.minus == true && this.numberOne != null && this.numberTwo != null && this.result != null
+                && this.additionalNumber != null) {
+                this.result = parseFloat(this.result) - parseFloat(this.additionalNumber);
                 this.additionalNumber = null;
                 return this.result;
             }
