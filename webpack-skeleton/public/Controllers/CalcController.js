@@ -1,19 +1,20 @@
 export default class CalcController {
-    constructor(calcBrain) {
+    constructor(calcBrain, order) {
         this.calc = calcBrain
+        this.order = order;
     }
 
     showNum(num = "") {
         if (num != null) {
-            document.querySelector("span").innerText = "";
+            document.querySelector("#monitor"+this.order).innerText = "";
             let nums = num + "";
             if(nums.indexOf(".") >= 0){
-                document.querySelector("span").innerText = nums;
+                document.querySelector("#monitor"+this.order).innerText = nums;
             }else{ // to not return number starting with 0
-                document.querySelector("span").innerText = parseFloat(nums) + "";
+                document.querySelector("#monitor"+this.order).innerText = parseFloat(nums) + "";
             }
         } else {
-            document.querySelector("span").innerText = "";
+            document.querySelector("#monitor"+this.order).innerText = "";
         }
 
     }
