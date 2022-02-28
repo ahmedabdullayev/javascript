@@ -17,8 +17,7 @@ export default function MainView(btns, order) {
     content.append(body)
 
     let btnGroup = document.createElement('div');
-    btnGroup.classList = "btn-group w-100 justify-content-center";
-    btnGroup.id = "quickmath"+order;;
+    btnGroup.classList = "btn-group w-100 justify-content-center quickmath"+order;
 
     btnGroup.innerHTML = btns;
     body.append(btnGroup);
@@ -27,53 +26,44 @@ export default function MainView(btns, order) {
     footer.classList = "card-footer";
 
     let plus = document.createElement('button');
-    plus.classList = "btn btn-success";
-    plus.id = "plusik"+order;
+    plus.classList = "btn btn-success plusik"+order;
     plus.innerText = "+";
 
     let minus = document.createElement('button');
-    minus.classList = "btn btn-success";
-    minus.id = "minusik"+order;;
+    minus.classList = "btn btn-success minusik"+order;
     minus.innerText = "-";
 
 
     let equals = document.createElement('button');
-    equals.classList = "btn btn-success";
-    equals.id = "equals"+order;
+    equals.classList = "btn btn-success equals"+order;
     equals.innerText = "=";
 
     let multiply = document.createElement('button');
-    multiply.classList = "btn btn-success";
-    multiply.id = "multiply"+order;;
+    multiply.classList = "btn btn-success multiply"+order;
     multiply.innerText = "*";
 
     let divide = document.createElement('button');
-    divide.classList = "btn btn-success";
-    divide.id = "divide"+order;;
+    divide.classList = "btn btn-success divide"+order;;
     divide.innerText = "/";
 
     let todefault = document.createElement('button');
-    todefault.classList = "btn btn-warning";
+    todefault.classList = "btn btn-warning todefault"+order;;
     todefault.style.marginLeft = "5px";
-    todefault.id = "todefault"+order;;
     todefault.innerText = "AC";
 
     let dot = document.createElement('button');
-    dot.classList = "btn btn-secondary";
+    dot.classList = "btn btn-secondary dot"+order;
     dot.style.marginRight = "5px";
-    dot.id = "dot"+order;;
     dot.innerText = ".";
 
     let toplusorminus = document.createElement('button');
-    toplusorminus.classList = "btn btn-secondary";
+    toplusorminus.classList = "btn btn-secondary toplusorminus"+order;;
     toplusorminus.style.marginRight = "10px";
-    toplusorminus.id = "toplusorminus"+order;;
     toplusorminus.innerText = "+/-";
 
     let clearnum = document.createElement('button');
-    clearnum.classList = "btn btn-warning";
+    clearnum.classList = "btn btn-warning clearnum"+order;;
     clearnum.style.marginLeft = "5px"
-    clearnum.id = "clearnum"+order;;
     clearnum.innerText = "C";
 
     footer.append(dot)
