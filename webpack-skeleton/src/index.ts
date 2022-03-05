@@ -1,6 +1,7 @@
-import AddRemoveCalcs from "../public/Views/AddRemoveCalcs";
+import AddRemoveCalcs from "./Views/AddRemoveCalcs";
 
 let addRemoveCalcs = new AddRemoveCalcs();
 
 addRemoveCalcs.addCalc();
 addRemoveCalcs.removeCalc();
+

@@ -1,36 +1,37 @@
+import CalcBrain from "../Models/CalcBrain";
+
 export default class CalcController {
-    constructor(calcBrain, order) {
+    private calc: CalcBrain;
+    private order: string;
+    constructor(calcBrain : CalcBrain, order : string) {
         this.calc = calcBrain
         this.order = order;
     }
 
-    showNum(num = "") {
+    showNum(num : string | null = "") {
         if (num != null) {
-            document.querySelector("#monitor"+this.order).innerText = "";
+            document.querySelector<HTMLDivElement>("#monitor"+this.order)!.innerText = "";
             let nums = num + "";
             if(nums.indexOf(".") >= 0){
-                document.querySelector("#monitor"+this.order).innerText = nums;
+                document.querySelector<HTMLDivElement>("#monitor"+this.order)!.innerText = nums;
             }else{ // to not return number starting with 0
-                document.querySelector("#monitor"+this.order).innerText = parseFloat(nums) + "";
+                document.querySelector<HTMLDivElement>("#monitor"+this.order)!.innerText = parseFloat(nums) + "";
             }
         } else {
-            document.querySelector("#monitor"+this.order).innerText = "";
+            document.querySelector<HTMLDivElement>("#monitor"+this.order)!.innerText = "";
         }
 
     }
 
-    setValues(event = null, dot = false, toplusorminus = false, clearnum = false) {
-        let number = 0;
-        if (event != null) {
-            number = parseFloat(event.target.closest('.num').getAttribute('number'));
-        }
+    setValues(number : number , dot = false, toplusorminus = false, clearnum = false) {
+
         if (this.calc.getNumberOne() == null && toplusorminus == false && clearnum == false) { // we are in first number scope and setting first number for it
             this.calc.setNumberOne(number + "");
-            this.showNum(number)
+            this.showNum(number.toString())
         } else if (this.calc.getPlus() == false && this.calc.getMinus() == false && this.calc.getDivide() == false
             && this.calc.getMultiply() == false && this.calc.getNumberOne() != null
             && this.calc.getResult() == null) {  // we are in first number scope and adding next numbers for it
-            if (dot == true && this.calc.getNumberOne().indexOf(".") <= -1 && toplusorminus == false) {
+            if (dot == true && this.calc!.getNumberOne()!.toString().indexOf(".") <= -1 && toplusorminus == false) {
                 let numStr = this.calc.getNumberOne() + "."; // adding one dot
                 this.calc.setNumberOne(numStr)
                 this.showNum(numStr)
@@ -51,10 +52,10 @@ export default class CalcController {
         if (this.calc.getNumberTwo() == null && (this.calc.getPlus() == true || this.calc.getMinus() == true
             || this.calc.getDivide() == true || this.calc.getMultiply() == true) && this.calc.getResult() == null && toplusorminus == false && clearnum == false) {
             this.calc.setNumberTwo(number + "");
-            this.showNum(number)
+            this.showNum(number.toString())
         } else if ((this.calc.getPlus() == true || this.calc.getMinus() == true || this.calc.getDivide() == true
             || this.calc.getMultiply() == true) && this.calc.getNumberTwo() != null && this.calc.getResult() == null) {
-            if (dot == true && this.calc.getNumberTwo().indexOf(".") <= -1 && toplusorminus == false) {
+            if (dot == true && this.calc.getNumberTwo()!.toString().indexOf(".") <= -1 && toplusorminus == false) {
                 let numStr = this.calc.getNumberTwo() + ".";
                 this.calc.setNumberTwo(numStr)
                 this.showNum(numStr)
@@ -77,11 +78,11 @@ export default class CalcController {
                 || this.calc.getDivide() == true || this.calc.getMultiply() == true)
             && this.calc.getAdditionalNumber() == null && toplusorminus == false) {
             this.calc.setAdditionalNumber(number + "");
-            this.showNum(number)
+            this.showNum(number.toString())
         } else if (this.calc.getResult() != null && (this.calc.getPlus() == true || this.calc.getMinus() == true
                 || this.calc.getDivide() == true || this.calc.getMultiply() == true)
             && this.calc.getAdditionalNumber() != null) {
-            if (dot == true && this.calc.getAdditionalNumber().indexOf(".") <= -1 && toplusorminus == false) {
+            if (dot == true && this.calc.getAdditionalNumber()!.toString().indexOf(".") <= -1 && toplusorminus == false) {
                 let numStr = this.calc.getAdditionalNumber() + ".";
                 this.calc.setAdditionalNumber(numStr)
                 this.showNum(numStr)
@@ -101,7 +102,7 @@ export default class CalcController {
         }
     }
 
-    doCalculations(operation) {
+    doCalculations(operation : string) {
         let res = this.calc.doMath(operation)
         this.showNum(res)
     }

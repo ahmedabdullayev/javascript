@@ -1,4 +1,13 @@
 export default class CalcBrain {
+    private numberOne: number | string | null;
+    private numberTwo: number | string | null;
+    private result: number | string | null;
+    private additionalNumber: number | string | null;
+    private plus: boolean;
+    private minus: boolean;
+    private divide: boolean;
+    private multiply: boolean;
+    private lastOperation: string;
 
     constructor() {
         //Numbers
@@ -20,7 +29,7 @@ export default class CalcBrain {
         return this.numberOne;
     }
 
-    setNumberOne(num) {
+    setNumberOne(num : string) {
         this.numberOne = num;
     }
 
@@ -28,7 +37,7 @@ export default class CalcBrain {
         return this.numberTwo;
     }
 
-    setNumberTwo(num) {
+    setNumberTwo(num : string) {
         this.numberTwo = num;
     }
 
@@ -40,7 +49,7 @@ export default class CalcBrain {
         return this.additionalNumber;
     }
 
-    setAdditionalNumber(num) {
+    setAdditionalNumber(num : string) {
         this.additionalNumber = num;
     }
 
@@ -55,9 +64,9 @@ export default class CalcBrain {
         this.multiply = false
         this.lastOperation = '';
     }
-    changeNumberNegativeOrPositive(number){
+    changeNumberNegativeOrPositive(number : string){
         if(number == "first" && this.numberOne != null) {
-            if (this.numberOne.indexOf("-") >= 0) {
+            if (typeof this.numberOne !== "number" && this.numberOne?.indexOf("-") >= 0) {
                 this.numberOne = this.numberOne.substring(1)
             } else {
                 this.numberOne = "-" + this.numberOne
@@ -65,7 +74,7 @@ export default class CalcBrain {
             return this.numberOne
         }
         if(number == "second" && this.numberTwo != null) {
-            if (this.numberTwo.indexOf("-") >= 0) {
+            if (typeof this.numberTwo !== "number" && this.numberTwo?.indexOf("-") >= 0) {
                 this.numberTwo = this.numberTwo.substring(1)
             } else {
                 this.numberTwo = "-" + this.numberTwo
@@ -73,7 +82,7 @@ export default class CalcBrain {
             return this.numberTwo
         }
         if(number == "additional" && this.additionalNumber != null) {
-            if (this.additionalNumber.indexOf("-") >= 0) {
+            if (typeof this.additionalNumber !== "number" && this.additionalNumber?.indexOf("-") >= 0) {
                 this.additionalNumber = this.additionalNumber.substring(1)
             } else {
                 this.additionalNumber = "-" + this.additionalNumber
@@ -82,9 +91,9 @@ export default class CalcBrain {
         }
         return "";
     }
-    clearNumber(number){
+    clearNumber(number : string){
         if(number == "first" && this.numberOne != null) {
-            if (this.numberOne.replace(/\D/g,'').length > 1) {
+            if (typeof this.numberOne !== "number" && this.numberOne?.replace(/\D/g, '').length > 1) {
                 this.numberOne = this.numberOne.substring(0, this.numberOne.length - 1)
             } else {
                 this.numberOne = "0";
@@ -92,7 +101,7 @@ export default class CalcBrain {
             return this.numberOne
         }
         if(number == "second" && this.numberTwo != null) {
-            if (this.numberTwo.replace(/\D/g,'').length > 1) {
+            if (typeof this.numberTwo !== "number" && this.numberTwo?.replace(/\D/g, '').length > 1) {
                 this.numberTwo = this.numberTwo.substring(0, this.numberTwo.length - 1)
             } else {
                 this.numberTwo = "0";
@@ -100,7 +109,7 @@ export default class CalcBrain {
             return this.numberTwo
         }
         if(number == "additional" && this.additionalNumber != null) {
-            if (this.additionalNumber.replace(/\D/g,'').length > 1) {
+            if (typeof this.additionalNumber !== "number" && this.additionalNumber?.replace(/\D/g, '').length > 1) {
                 this.additionalNumber = this.additionalNumber.substring(0, this.additionalNumber.length - 1)
             } else {
                 this.additionalNumber = "0";
@@ -111,54 +120,74 @@ export default class CalcBrain {
         return "";
 
     }
-    doMath(operation) {
+    doMath(operation : string) : string | null {
         if (operation == 'minus') {
             this.setMinusTrueOthersFalse()
             if (this.minus == true && this.numberOne != null && this.numberTwo != null && this.result == null) {
-                this.result = parseFloat(this.numberOne) - parseFloat(this.numberTwo);
-                return this.result;
+                this.numberOne = this.numberOne.toString();
+                this.numberTwo = this.numberTwo.toString();
+                    this.result = parseFloat(this.numberOne) - parseFloat(this.numberTwo);
+                return this.result!.toString();
             } else if (this.minus == true && this.numberOne != null && this.numberTwo != null && this.result != null
                 && this.additionalNumber != null) {
-                this.result = parseFloat(this.result) - parseFloat(this.additionalNumber);
+                this.additionalNumber = this.additionalNumber.toString()
+                this.result = this.result.toString();
+                    this.result = parseFloat(this.result) - parseFloat(this.additionalNumber);
                 this.additionalNumber = null;
-                return this.result;
+                return this.result!.toString();
             }
         } else if (operation == 'plus') {
             console.log("ples")
             this.setPlusTrueOthersFalse()
             if (this.plus == true && this.numberOne != null && this.numberTwo != null && this.result == null) {
-                this.result = parseFloat(this.numberOne) + parseFloat(this.numberTwo);
-                return this.result;
+                this.numberOne = this.numberOne.toString();
+                this.numberTwo = this.numberTwo.toString();
+                    this.result = parseFloat(this.numberOne) + parseFloat(this.numberTwo);
+                return this.result!.toString();
             } else if (this.plus == true && this.numberOne != null && this.numberTwo != null && this.result != null
                 && this.additionalNumber != null) {
+                this.additionalNumber = this.additionalNumber.toString()
+                this.result = this.result.toString();
                 this.result = parseFloat(this.result) + parseFloat(this.additionalNumber);
                 this.additionalNumber = null;
-                return this.result;
+                return this.result!.toString();
             }
         } else if (operation == 'divide') {
             this.setDivideTrueOthersFalse()
             if (this.divide == true && this.numberOne != null && this.numberTwo != null && this.result == null) {
-                this.result = parseFloat(this.numberOne) / parseFloat(this.numberTwo);
-                return this.result;
+                this.numberOne = this.numberOne.toString();
+                this.numberTwo = this.numberTwo.toString();
+                    this.result = parseFloat(this.numberOne) / parseFloat(this.numberTwo);
+                return this.result!.toString();
             } else if (this.divide == true && this.numberOne != null && this.numberTwo != null && this.result != null
                 && this.additionalNumber != null) {
-                this.result = parseFloat(this.result) / parseFloat(this.additionalNumber);
+                this.additionalNumber = this.additionalNumber.toString()
+                this.result = this.result.toString();
+                    this.result = parseFloat(this.result) / parseFloat(this.additionalNumber);
                 this.additionalNumber = null;
-                return this.result;
+                return this.result!.toString();
             }
         } else if (operation == 'multiply') {
             this.setMultiplyTrueOthersFalse()
             if (this.multiply == true && this.numberOne != null && this.numberTwo != null && this.result == null) {
-                this.result = parseFloat(this.numberOne) * parseFloat(this.numberTwo);
-                return this.result;
+                this.numberOne = this.numberOne.toString();
+                this.numberTwo = this.numberTwo.toString();
+                    this.result = parseFloat(this.numberOne) * parseFloat(this.numberTwo);
+                return this.result!.toString();
             } else if (this.multiply == true && this.numberOne != null && this.numberTwo != null && this.result != null
                 && this.additionalNumber != null) {
-                this.result = parseFloat(this.result) * parseFloat(this.additionalNumber);
+                this.additionalNumber = this.additionalNumber.toString()
+                this.result = this.result.toString();
+                    this.result = parseFloat(this.result) * parseFloat(this.additionalNumber);
                 this.additionalNumber = null;
-                return this.result;
+                return this.result!.toString();
             }
         }
-        return this.result;
+        console.warn("here: ", operation)
+        if(this.result == null){
+            return null;
+        }
+        return this.result!.toString();
     }
 
     getPlus() {
