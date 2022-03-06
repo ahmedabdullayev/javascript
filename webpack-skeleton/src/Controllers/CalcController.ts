@@ -9,16 +9,17 @@ export default class CalcController {
     }
 
     showNum(num : string | null = "") {
+        let docm = document.querySelector("#monitor"+this.order)
         if (num != null) {
-            document.querySelector<HTMLDivElement>("#monitor"+this.order)!.innerText = "";
+            docm!.innerHTML = "";
             let nums = num + "";
             if(nums.indexOf(".") >= 0){
-                document.querySelector<HTMLDivElement>("#monitor"+this.order)!.innerText = nums;
+                docm!.innerHTML = nums
             }else{ // to not return number starting with 0
-                document.querySelector<HTMLDivElement>("#monitor"+this.order)!.innerText = parseFloat(nums) + "";
+                docm!.innerHTML = parseFloat(nums) + "";
             }
         } else {
-            document.querySelector<HTMLDivElement>("#monitor"+this.order)!.innerText = "";
+            docm!.innerHTML = "";
         }
 
     }

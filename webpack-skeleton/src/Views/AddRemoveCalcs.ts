@@ -17,8 +17,8 @@ export default class AddRemoveCalcs {
         let my_calc = new CalcBrain();
         let my_controller = new CalcController(my_calc, order);
         document.body.appendChild(viewer)
-
-        document.querySelector('.quickmath'+order)!.addEventListener("click", (e: Event) => {
+        let doc = document.querySelector('.quickmath'+order);
+        doc!.addEventListener("click", (e: Event) => {
             const target = e.target as HTMLTextAreaElement;
             let num = parseFloat(target.closest('.num')!.getAttribute('number')!.toString())
             my_controller.setValues(num, false, false)
@@ -26,32 +26,38 @@ export default class AddRemoveCalcs {
         document.querySelector('.dot'+order)!.addEventListener("click", ()=> {
             my_controller.setValues(0, true, false)
         })
-        document.querySelector<HTMLDivElement>('.toplusorminus'+order)!.onclick= function (){
+        let toplusorminus = document.querySelector('.toplusorminus'+order);
+        toplusorminus!.addEventListener('click', ()=> {
             my_controller.setValues(0, false, true)
-        }
-        document.querySelector<HTMLDivElement>('.clearnum'+order)!.onclick= function (){
+        });
+        let clearNum = document.querySelector('.clearnum'+order);
+        clearNum!.addEventListener('click', function (){
             my_controller.setValues(0, false, false, true)
-        }
-
-        document.querySelector<HTMLDivElement>('.plusik'+order)!.onclick = function () {
+        })
+        let plusik = document.querySelector('.plusik'+order);
+        plusik!.addEventListener('click', function () {
             my_controller.doCalculations('plus')
-        }
-        document.querySelector<HTMLDivElement>('.minusik'+order)!.onclick = function () {
+        })
+        let minusik = document.querySelector('.minusik'+order);
+        minusik!.addEventListener('click', function () {
             my_controller.doCalculations('minus')
-        }
-        document.querySelector<HTMLDivElement>('.multiply'+order)!.onclick = function () {
+        })
+        let multiply = document.querySelector('.multiply'+order);
+        multiply!.addEventListener('click', function () {
             my_controller.doCalculations('multiply')
-        }
-        document.querySelector<HTMLDivElement>('.divide'+order)!.onclick = function () {
+        })
+        let divide = document.querySelector('.divide'+order);
+        divide!.addEventListener('click', function () {
             my_controller.doCalculations('divide')
-        }
-        document.querySelector<HTMLDivElement>('.todefault'+order)!.onclick = function () {
+        })
+        let todefault = document.querySelector('.todefault'+order)
+        todefault!.addEventListener('click', function () {
             my_controller.toDefaultValues()
-        }
-
-        document.querySelector<HTMLDivElement>('.equals'+order)!.onclick = function () {
+        })
+        let equals = document.querySelector('.equals'+order);
+        equals!.addEventListener('click',function () {
             my_controller.doCalculations(my_calc.getLastOperation());
-        }
+        })
 
     }
     addCalc(){
@@ -65,7 +71,8 @@ export default class AddRemoveCalcs {
         }
     }
     removeOldCalc(calc:string) {
-        document.body.querySelector<HTMLDivElement>(`#calc_0${calc}`)!.remove()
+        let removeCalc = document.body.querySelector(`#calc_0${calc}`);
+        removeCalc!.remove()
     }
     removeCalc(){
         let buttonRemove = document.createElement("button");
