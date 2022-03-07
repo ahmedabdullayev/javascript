@@ -19,9 +19,11 @@ export default class AddRemoveCalcs {
         document.body.appendChild(viewer)
         let doc = document.querySelector('.quickmath'+order);
         doc!.addEventListener("click", (e: Event) => {
-            const target = e.target as HTMLTextAreaElement;
-            let num = parseFloat(target.closest('.num')!.getAttribute('number')!.toString())
-            my_controller.setValues(num, false, false)
+            if(e.target instanceof HTMLButtonElement) {
+                const target = e.target;
+                let num = parseFloat(target.closest('.num')!.getAttribute('number')!.toString())
+                my_controller.setValues(num, false, false)
+            }
         })
         document.querySelector('.dot'+order)!.addEventListener("click", ()=> {
             my_controller.setValues(0, true, false)
