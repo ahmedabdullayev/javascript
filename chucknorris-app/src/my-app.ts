@@ -5,12 +5,14 @@ import {JokeService} from "./services/jokeService";
     {
       id: 'main',
       path: '',
+      transitionPlan: "invoke-lifecycles",
       component: import('./components/index'),
       title: 'Main',
     },
     {
       id: 'results',
       path: '/category/:cat',
+      transitionPlan: "invoke-lifecycles",
       component: import('./components/category'),
       title: 'Results',
     },
