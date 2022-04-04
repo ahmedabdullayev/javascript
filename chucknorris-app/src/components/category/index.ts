@@ -15,11 +15,8 @@ export class Index {
         private JokeService: JokeService,
         JokeState: JokeState) {
         this.state = JokeState;
-        console.warn("dsada")
-        //this.logger = logger.scopeTo("Index");
     }
     async load(params: Params) {
-        console.warn('dsds')
         this.category = params['cat']
         this.tempJokes = []
         for (let i = 0; i < 5; i++){

@@ -1,11 +1,8 @@
+<ul class="nav-links" >
+    <li class="nav-link-single"><a load="/">Home</a></li>
+    <template repeat.for="nav of categories">
+        | <li class="nav-link-single"><a load="/category/${nav}">${nav}</a></li>
+    </template>
+</ul>
+<au-viewport></au-viewport>
 
-<template>
-    <ul class="nav-links" >
-        <li class="nav-link-single"><a load="/">Home</a></li>
-        <template repeat.for="nav of categories">
-            | <li class="nav-link-single"><a load="/category/${nav}">${nav}</a></li>
-        </template>
-    </ul>
-    <au-viewport></au-viewport>
-
-</template>
