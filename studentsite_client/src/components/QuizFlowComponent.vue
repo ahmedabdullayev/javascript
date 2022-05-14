@@ -15,37 +15,40 @@ import axios from "axios";
 import UserChoice from "@/types/UserChoice";
 import Question from "@/types/Question";
 import router from "@/router";
+import UserServices from "@/services/UserServices";
 export default defineComponent({
   name: "QuizFlowComponent",
   components:{},
   data(){
-    const userId = 'bae60579-9abb-47ec-b100-39fc44694c6e';
+    // const userId = 'b59d31d5-d394-46af-9099-f782114cd90f';
     const user_QuizId = this.$route.params.userQuizId;
     const quiz_id = this.$route.params.quizId;
     return{
-      userChoice: [] as UserChoice[],
+      userChoice: {} as UserChoice,
       question: [] as Question[],
       form:{
         quizId: quiz_id,
         questionId: '' as string,
         answerId: '' as string,
-        userQuizId: user_QuizId,
-        appUserId: userId
+        userQuizId: user_QuizId
+        // appUserId: userId
       },
       formGetUserChoices:{
-        userQuizId: user_QuizId,
-        appUserId: userId
+        userQuizId: user_QuizId
+        // appUserId: userId
       }
 
     }
   },
   methods:{
     async getPostUserChoice(){
-      await axios.post('UserChoice/PostGetUserChoice', this.formGetUserChoices)
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      await axios.post('UserChoice/PostGetUserChoice', this.formGetUserChoices, conf)
           .then(res => {
             return res.data
           }).then(data =>{
-            this.userChoice = data as UserChoice[]
+            this.userChoice = data as UserChoice
             this.form.questionId = this.userChoice.questionId;
             console.log(this.userChoice)
           }).catch(err => {
@@ -54,7 +57,9 @@ export default defineComponent({
     },
 
     async getQuestionWithAnswers(){
-        await axios.get('Question/GetQuestion/' + this.userChoice.questionId)
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+        await axios.get('Question/GetQuestion/' + this.userChoice.questionId, conf)
             .then(res => {
               return res.data
             }).then(data =>{
@@ -66,8 +71,10 @@ export default defineComponent({
             })
     },
     async addUserChoice(){
-      await axios.post('UserChoice/PostUserChoice', this.form).then((res) => {
-        this.userChoice = res.data as UserChoice[]
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      await axios.post('UserChoice/PostUserChoice', this.form, conf).then((res) => {
+        this.userChoice = res.data as UserChoice
         this.form.questionId = this.userChoice.questionId;
         console.log(this.userChoice)
       })

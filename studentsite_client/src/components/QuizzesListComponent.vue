@@ -16,32 +16,37 @@ import {defineComponent} from "vue";
 import Subject from "@/types/Subject";
 import UserQuiz from "@/types/UserQuiz";
 import router from "@/router";
+import UserServices from "@/services/UserServices";
 export default defineComponent({
   name: "QuizzesListComponent",
   components: {},
   data(){
-    const userId = 'bae60579-9abb-47ec-b100-39fc44694c6e';
+    // const userId = 'bac4c5ba-91c5-4c9c-b0a8-023cf0728561';
     return{
       subjects: [] as Subject[],
-      userQuiz: [] as UserQuiz[],
+      userQuiz: {} as UserQuiz,
       form:{
-        quizId: '' as string,
-        appUserId: userId
+        quizId: '' as string
+        // appUserId: userId
       }
     }
   },
   methods:{
     async startQuiz(id: string){
       this.form.quizId = id;
-      await axios.post('UserQuiz/PostUserQuiz', this.form).then((res) => {
-          this.userQuiz = res.data as UserQuiz[]
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      await axios.post('UserQuiz/PostUserQuiz', this.form, conf).then((res) => {
+          this.userQuiz = res.data as UserQuiz
           console.log(this.userQuiz)
       })
       await router.push(`/quiz/${this.form.quizId}/userQuiz/${this.userQuiz.id}`)
     },
   },
   async mounted(){
-    await axios.get('Subjects/GetSubject/' + this.$route.params.id)
+    let userPromise = await UserServices.RefreshToken();
+    let conf = UserServices.AxiosJwt(userPromise.token)
+    await axios.get('Subjects/GetSubject/' + this.$route.params.id, conf)
         .then((res) => {
           this.subjects = res.data as Subject[]
         })

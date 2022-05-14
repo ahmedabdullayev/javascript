@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import AddAnswerComponent from "@/components/AddAnswerComponent.vue";
+import AddAnswerComponent from "@/components/admin/AddAnswerComponent.vue";
 export default defineComponent({
   name: "AdminAnswersView",
   components: {AddAnswerComponent}

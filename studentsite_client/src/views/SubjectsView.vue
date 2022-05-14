@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import SubjectListComponent from "../components/SubjectListComponent";
+import SubjectListComponent from "@/components/SubjectListComponent.vue";
 export default defineComponent({
   name: "SubjectsView",
   components: {SubjectListComponent}

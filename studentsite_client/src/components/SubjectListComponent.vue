@@ -14,6 +14,7 @@
 import {defineComponent} from "vue";
 import axios from "axios";
 import Subject from "@/types/Subject";
+import UserServices from "@/services/UserServices";
 
 export default defineComponent({
   name: "SubjectListComponent",
@@ -25,7 +26,9 @@ export default defineComponent({
   },
 
   async mounted(){
-    await axios.get('Subjects/GetSubjects')
+    let userPromise = await UserServices.RefreshToken();
+    let conf = UserServices.AxiosJwt(userPromise.token)
+    await axios.get('Subjects/GetSubjects', conf)
         .then((res) => {
           this.subjects = res.data as Subject[]
         })

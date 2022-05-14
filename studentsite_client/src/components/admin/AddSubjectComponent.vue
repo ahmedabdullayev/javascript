@@ -1,5 +1,5 @@
 <template>
-  <h1>Add Topic</h1>
+  <h1>Add Subject</h1>
   <form v-on:submit.prevent="submitForm">
     <div class="mb-3">
       <label for="name" class="form-label text-right">Name</label>
@@ -23,16 +23,17 @@
       Errors!
     </div>
   </div>
-  <TopicListAdminComponent ref="reloadData"></TopicListAdminComponent>
+  <SubjectListAdminComponent ref="reloadData"></SubjectListAdminComponent>
 </template>
 
 <script lang="ts">
 import {defineComponent} from "vue";
 import axios from "axios";
-import TopicListAdminComponent from "@/components/TopicListAdminComponent.vue";
+import SubjectListAdminComponent from "@/components/admin/SubjectListAdminComponent.vue";
+import UserServices from "@/services/UserServices";
 export default defineComponent({
-  name: "AddTopicComponent",
-  components:{TopicListAdminComponent},
+  name: "AddSubjectComponent",
+  components: {SubjectListAdminComponent},
   data(){
     return{
       errorArray: [] as string[],
@@ -44,16 +45,19 @@ export default defineComponent({
     }
   },
   methods:{
-    submitForm(){
+    async submitForm(){
       if(this.form?.name == '' || this.form?.description == ''){
         this.errorArray.push("error");
         return //to prevent sending request to api
       }
-      axios.post('/Topic/PostTopic', this.form)
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      axios.post('/Subjects/PostSubject', this.form, conf)
           .then((res) =>{
             this.errorArray = []
             this.success = true
-            let call = (this.$refs.reloadData as InstanceType<typeof TopicListAdminComponent>).getTodos()
+            let call = (this.$refs.reloadData as InstanceType<typeof SubjectListAdminComponent>).getSubjects()
+
           })
           .catch((error) =>{
             this.errorArray.push(error);

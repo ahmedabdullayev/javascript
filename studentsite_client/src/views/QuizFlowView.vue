@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import QuizFlowComponent from "../components/QuizFlowComponent";
+import QuizFlowComponent from "@/components/QuizFlowComponent.vue";
 export default defineComponent({
   name: "QuizFlowView",
   components:{QuizFlowComponent}

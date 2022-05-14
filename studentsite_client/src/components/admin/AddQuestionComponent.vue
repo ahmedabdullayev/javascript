@@ -31,6 +31,7 @@ import {defineComponent} from "vue";
 import axios from "axios";
 import Quiz from "@/types/Quiz";
 import QuestionListAdminComponent from "@/components/QuestionListAdminComponent.vue";
+import UserServices from "@/services/UserServices";
 export default defineComponent({
   name: "AddQuestionComponent",
   components: {QuestionListAdminComponent},
@@ -52,7 +53,9 @@ export default defineComponent({
         this.errorArray.push("error");
         return //to prevent sending request to api
       }
-      await axios.post('/Question/PostQuestion', this.form)
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      await axios.post('/Question/PostQuestion', this.form, conf)
           .then((res) =>{
             this.errorArray = []
             this.success = true
@@ -66,7 +69,9 @@ export default defineComponent({
     },
   },
   async mounted(){
-    await axios.get('Quiz/GetQuizzes')
+    let userPromise = await UserServices.RefreshToken();
+    let conf = UserServices.AxiosJwt(userPromise.token)
+    await axios.get('Quiz/GetQuizzes', conf)
         .then((res) => {
           this.quizzes = res.data as Quiz[]
         })

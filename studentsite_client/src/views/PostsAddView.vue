@@ -12,7 +12,7 @@
 import {defineComponent} from "vue";
 import AddUserPostComponent from "@/components/AddUserPostComponent.vue";
 export default defineComponent({
-  name: "PostsView",
+  name: "PostsAddView",
   components:{AddUserPostComponent},
 });
 </script>

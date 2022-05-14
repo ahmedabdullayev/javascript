@@ -13,7 +13,7 @@
       <th scope="row">{{ topic.id }}</th>
       <td>{{ topic.name }}</td>
       <td>{{ topic.description }}</td>
-      <td><button type="button" class="btn btn-danger" v-on:click="deleteTodo(topic.id)">Delete</button></td>
+      <td><button type="button" class="btn btn-danger" v-on:click="deleteTopic(topic.id)">Delete</button></td>
     </tr>
     </tbody>
   </table>
@@ -21,8 +21,9 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import {Topic} from "../types/Topic";
+import {Topic} from "@/types/Topic";
 import axios from "axios";
+import UserServices from "@/services/UserServices";
 
 export default defineComponent({
   name: "TopicListAdminComponent",
@@ -33,21 +34,25 @@ export default defineComponent({
     }
   },
   methods:{
-    async deleteTodo(id: string){
-      await axios.delete('Topic/DeleteTopic/'+id).then((res) => {
+    async deleteTopic(id: string){
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      await axios.delete('Topic/DeleteTopic/'+id, conf).then((res) => {
         console.log(res)
       })
-      await this.getTodos();
+      await this.getTopics();
     },
-    async getTodos(){
-      await axios.get('Topic/GetTopics').then((res) => {
+    async getTopics(){
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      await axios.get('Topic/GetTopics', conf).then((res) => {
         this.topics = res.data as Topic[]
         console.log(this.topics)
       })
     }
   },
   async mounted(){
-    await this.getTodos()
+    await this.getTopics()
   }
 })
 </script>

@@ -1,17 +1,17 @@
 <template>
   <div class="container">
     <div class="row">
-      <AddQuizComponent></AddQuizComponent>
+  <TopicListComponent></TopicListComponent>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import AddQuizComponent from "@/components/admin/AddQuizComponent.vue";
+import TopicListComponent from "@/components/TopicListComponent.vue";
 export default defineComponent({
-  name: "AdminQuizzesView",
-  components: {AddQuizComponent}
+  name: "TopicsViews",
+  components: {TopicListComponent}
 })
 </script>
 

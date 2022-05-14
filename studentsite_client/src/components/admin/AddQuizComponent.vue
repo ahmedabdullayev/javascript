@@ -12,7 +12,7 @@
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="flexCheckDefault" v-model="form.isReady">
       <label class="form-check-label" for="flexCheckDefault">
-        is it ready? {{form.isReady}}
+        is it ready?
       </label>
     </div>
     <select class="form-select" v-model="form.subjectId" id="listOfCategories">
@@ -33,15 +33,18 @@
       Errors!
     </div>
   </div>
+  <QuizListAdminComponent ref="reloadData"></QuizListAdminComponent>
 </template>
 
 <script lang="ts">
 import {defineComponent} from "vue";
 import axios from "axios";
 import Subject from "@/types/Subject";
+import UserServices from "@/services/UserServices";
+import QuizListAdminComponent from "@/components/admin/QuizListAdminComponent.vue";
 export default defineComponent({
   name: "AddQuizComponent",
-  components: {},
+  components: {QuizListAdminComponent},
   data(){
     return{
       errorArray: [] as string[],
@@ -56,15 +59,19 @@ export default defineComponent({
     }
   },
   methods:{
-    submitForm(){
+    async submitForm(){
+
       if(this.form?.name == '' || this.form?.description == ''){
         this.errorArray.push("error");
         return //to prevent sending request to api
       }
-      axios.post('/Quiz/PostQuiz', this.form)
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      await axios.post('/Quiz/PostQuiz', this.form, conf)
           .then((res) =>{
             this.errorArray = []
             this.success = true
+            let call = (this.$refs.reloadData as InstanceType<typeof QuizListAdminComponent>).getQuizzes()
           })
           .catch((error) =>{
             this.errorArray.push(error);
@@ -74,7 +81,9 @@ export default defineComponent({
     },
   },
   async mounted(){
-    await axios.get('Subjects/GetSubjects')
+    let userPromise = await UserServices.RefreshToken();
+    let conf = UserServices.AxiosJwt(userPromise.token)
+    await axios.get('Subjects/GetSubjects', conf)
     .then((res) => {
       this.subjects = res.data as Subject[]
     })

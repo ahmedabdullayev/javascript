@@ -9,15 +9,39 @@ import QuizzesView from "@/views/QuizzesView.vue";
 import QuizFlowView from "@/views/QuizFlowView.vue";
 import ResultsView from "@/views/ResultsView.vue";
 import AdminTopicsView from "@/views/AdminTopicsView.vue";
-import PostsView from "@/views/PostsView.vue";
-import CommentsView from "@/views/CommentsView.vue";
+import PostsAddView from "@/views/PostsAddView.vue";
 import LoginView from "@/views/identity/LoginView.vue";
 import RegisterView from "@/views/identity/RegisterView.vue";
+import TopicsViews from "@/views/TopicsViews.vue";
+import PostsView from "@/views/userflow/PostsView.vue";
+import PostView from "@/views/userflow/PostView.vue";
+import TodosView from "@/views/userflow/TodosView.vue";
+import LogoutComponent from "@/components/identity/LogoutComponent.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/post/:id',
+    name: 'postwitchcomments',
+    component: PostView
+  },
+  {
+    path: '/todos',
+    name: 'todos',
+    component: TodosView
+  },
+  {
+    path: '/topics',
+    name: 'topics',
+    component: TopicsViews
+  },
+  {
+    path: '/topic/:topicId',
+    name: 'topicswithposts',
+    component: PostsView
   },
   {
     path: '/login',
@@ -28,6 +52,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/register',
     name: 'register',
     component: RegisterView
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: LogoutComponent
   },
   {
     path: '/admin/add-subject',
@@ -75,14 +104,9 @@ const routes: Array<RouteRecordRaw> = [
     component: ResultsView
   },
   {
-    path: '/post/add/',
-    name: 'PostsView',
-    component: PostsView
-  },
-  {
-    path: '/comment/add/',
-    name: 'CommentsView',
-    component: CommentsView
+    path: '/post-add/',
+    name: 'PostsAddView',
+    component: PostsAddView
   },
   {
     path: '/about',

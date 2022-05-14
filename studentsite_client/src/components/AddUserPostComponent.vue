@@ -34,11 +34,11 @@
 import {defineComponent} from "vue";
 import axios from "axios";
 import {Topic} from "../types/Topic";
+import UserServices from "@/services/UserServices";
 export default defineComponent({
   name: "AddUserPostComponent",
   components: {},
   data(){
-    const userId = 'bae60579-9abb-47ec-b100-39fc44694c6e';
     return{
       errorArray: [] as string[],
       success: false as boolean,
@@ -47,17 +47,18 @@ export default defineComponent({
         title : '' as string,
         text : '' as string,
         topicId: '' as string,
-        appUserId: userId
       }
     }
   },
   methods:{
-    submitForm(){
+    async submitForm(){
       if(this.form?.title == '' || this.form?.text == ''){
         this.errorArray.push("error");
         return //to prevent sending request to api
       }
-      axios.post('UserPost/PostUserPost', this.form)
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      await axios.post('UserPost/PostUserPost', this.form, conf)
           .then((res) =>{
             this.errorArray = []
             this.success = true
@@ -70,7 +71,9 @@ export default defineComponent({
     },
   },
   async mounted(){
-    await axios.get('Topic/GetTopics')
+    let userPromise = await UserServices.RefreshToken();
+    let conf = UserServices.AxiosJwt(userPromise.token)
+    await axios.get('Topic/GetTopics', conf)
         .then((res) => {
           this.topics = res.data as Topic[]
         })

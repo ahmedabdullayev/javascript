@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import AddQuestionComponent from "@/components/AddQuestionComponent.vue";
+import AddQuestionComponent from "@/components/admin/AddQuestionComponent.vue";
 import QuestionListAdminComponent from "@/components/QuestionListAdminComponent.vue";
 export default defineComponent({
   name: "AdminQuestionsView",

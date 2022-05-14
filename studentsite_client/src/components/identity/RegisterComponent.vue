@@ -25,12 +25,17 @@
 import {defineComponent} from "vue";
 import axios from "axios";
 import UserServices from "@/services/UserServices";
+import router from "@/router";
 export default defineComponent({
   name: "RegisterComponent",
   components:{},
   data() : {
-    email: string,
-    password: string,
+    form:{
+      email: string,
+      firstname: string,
+      lastname: string,
+      password: string,
+    }
   }{
     return{
       form:{
@@ -49,6 +54,7 @@ export default defineComponent({
             return res.data
           }).then(data =>{
             UserServices.SaveUserData(data)
+            router.push(`/`)
             console.warn(UserServices.GetUserData())
           }).catch(err => {
             console.warn(err)

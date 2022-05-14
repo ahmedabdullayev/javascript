@@ -1,28 +1,29 @@
 <template>
   <table class="table table-dark table-striped">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Question text</th>
-      <th scope="col">Your answer</th>
-      <th scope="col">Is it correct?</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr v-for="(item, index) in this.userQuiz.userChoices" :key="item.id" v-bind:value="item.id">
-      <td>{{ index }}</td>
-      <td>{{ item.question.questionText }}</td>
-      <td>{{ item.answer.answerText }}</td>
-      <td>{{ item.answer.isCorrect }}</td>
-    </tr>
-    </tbody>
-  </table>
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Question text</th>
+    <th scope="col">Your answer</th>
+    <th scope="col">Is it correct?</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr v-for="(item, index) in this.userQuiz.userChoices" :key="item.id" v-bind:value="item.id">
+    <td>{{ index }}</td>
+    <td>{{ item.question.questionText }}</td>
+    <td>{{ item.answer.answerText }}</td>
+    <td>{{ item.answer.isCorrect }}</td>
+  </tr>
+  </tbody>
+</table>
 </template>
 
 <script lang="ts">
 import {defineComponent} from "vue";
 import UserQuiz from "../types/UserQuiz";
 import axios from "axios";
+import UserServices from "@/services/UserServices";
 export default defineComponent({
   name: "ResultAfterQuizComponent",
   components: {},
@@ -33,7 +34,9 @@ export default defineComponent({
   },
   methods:{
     async getResults(){
-      await axios.get('UserQuiz/GetUserQuiz/' + this.$route.params.userQuizId)
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      await axios.get('UserQuiz/GetUserQuiz/' + this.$route.params.userQuizId, conf)
           .then((res) => {
             this.userQuiz = res.data as UserQuiz[]
           })

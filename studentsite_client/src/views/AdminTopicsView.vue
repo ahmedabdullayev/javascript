@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import AddTopicComponent from "@/components/AddTopicComponent.vue";
+import AddTopicComponent from "@/components/admin/AddTopicComponent.vue";
 export default defineComponent({
   name: "AdminTopicsView",
   components: {AddTopicComponent},

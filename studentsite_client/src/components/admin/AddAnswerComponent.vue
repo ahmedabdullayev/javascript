@@ -35,6 +35,7 @@
 import {defineComponent} from "vue";
 import axios from "axios";
 import Question from "@/types/Question";
+import UserServices from "@/services/UserServices";
 export default defineComponent({
   name: "AddAnswerComponent",
   components: {},
@@ -51,13 +52,15 @@ export default defineComponent({
     }
   },
   methods:{
-    submitForm(){
+    async submitForm(){
       if(this.form?.answerText == '' || this.form?.questionId == ''){
         alert('dsd')
         this.errorArray.push("error");
         return //to prevent sending request to api
       }
-      axios.post('/Answer/PostAnswer', this.form)
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      axios.post('/Answer/PostAnswer', this.form, conf)
           .then((res) =>{
             this.errorArray = []
             this.success = true
@@ -70,7 +73,9 @@ export default defineComponent({
     },
   },
   async mounted(){
-    await axios.get('Question/GetQuestions')
+    let userPromise = await UserServices.RefreshToken();
+    let conf = UserServices.AxiosJwt(userPromise.token)
+    await axios.get('Question/GetQuestions', conf)
         .then((res) => {
           this.questions = res.data as Question[]
         })

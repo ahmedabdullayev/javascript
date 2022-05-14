@@ -23,6 +23,7 @@
 import {defineComponent} from "vue";
 import axios from "axios";
 import Question from "@/types/Question";
+import UserServices from "@/services/UserServices";
 
 export default defineComponent({
   name: "QuestionListAdminComponent",
@@ -34,13 +35,18 @@ export default defineComponent({
   },
   methods:{
     async deleteQuestion(id: string){
-      await axios.delete('Question/DeleteQuestion/'+id).then((res) => {
+      let userPromise = await UserServices.RefreshToken();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      await axios.delete('Question/DeleteQuestion/'+id, conf).then((res) => {
         console.log(res)
       })
      await this.getQuestions();
     },
     async getQuestions(){
-      await axios.get('Question/GetQuestions').then((res) => {
+      // let userPromise = await UserServices.RefreshToken();
+      let userPromise = UserServices.GetUserData();
+      let conf = UserServices.AxiosJwt(userPromise.token)
+      await axios.get('Question/GetQuestions', conf).then((res) => {
         this.questions = res.data as Question[]
         console.log(this.questions)
       })
