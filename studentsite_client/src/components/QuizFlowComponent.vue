@@ -5,7 +5,7 @@
       <input type="radio" id="one" v-bind:value="answer.id" v-model="form.answerId">
       <label for="one">{{ answer.answerText }}</label>
     </div>
-  <button type="submit" class="btn btn-primary" v-on:click="addUserChoice()">Submit</button>
+  <button type="submit" class="btn btn-primary" v-on:click="addUserChoice()">{{ t('submit') }}</button>
 </div>
 </template>
 
@@ -16,14 +16,16 @@ import UserChoice from "@/types/UserChoice";
 import Question from "@/types/Question";
 import router from "@/router";
 import UserServices from "@/services/UserServices";
+import {useI18n} from "vue-i18n";
 export default defineComponent({
   name: "QuizFlowComponent",
   components:{},
   data(){
-    // const userId = 'b59d31d5-d394-46af-9099-f782114cd90f';
+    const { t } = useI18n()
     const user_QuizId = this.$route.params.userQuizId;
     const quiz_id = this.$route.params.quizId;
     return{
+      t,
       userChoice: {} as UserChoice,
       question: [] as Question[],
       form:{

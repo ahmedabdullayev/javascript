@@ -3,9 +3,9 @@
     <thead>
     <tr>
       <th scope="col">id#</th>
-      <th scope="col">Question text</th>
-      <th scope="col">Quiz id</th>
-      <th scope="col">Action</th>
+      <th scope="col">{{ t('question-text') }}</th>
+      <th scope="col">{{ t('quiz') }} id</th>
+      <th scope="col">{{ t('action') }}</th>
     </tr>
     </thead>
     <tbody>
@@ -13,7 +13,7 @@
       <th scope="row">{{ ques.id }}</th>
       <td>{{ ques.questionText }}</td>
       <td>{{ ques.quizId }}</td>
-      <td><button type="button" class="btn btn-danger" v-on:click="deleteQuestion(ques.id)">Delete</button></td>
+      <td><button type="button" class="btn btn-danger" v-on:click="deleteQuestion(ques.id)">{{ t('delete') }}</button></td>
     </tr>
     </tbody>
   </table>
@@ -24,12 +24,15 @@ import {defineComponent} from "vue";
 import axios from "axios";
 import Question from "@/types/Question";
 import UserServices from "@/services/UserServices";
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
   name: "QuestionListAdminComponent",
   components:{},
   data(){
+    const { t } = useI18n()
     return{
+      t,
       questions: [] as Question[]
     }
   },

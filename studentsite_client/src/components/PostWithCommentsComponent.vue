@@ -23,21 +23,21 @@
 
             <div class="form-floating border-top">
               <textarea class="form-control y-4" v-model="form.commentText" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-              <label for="floatingTextarea2">Write your comment</label>
-              <button type="submit" class="btn btn-primary" v-on:click="submitForm">Submit</button>
+              <label for="floatingTextarea2">{{ t('writeComment') }}</label>
+              <button type="submit" class="btn btn-primary" v-on:click="submitForm">{{ t('submit') }}</button>
             </div>
           </div>
 
           <div v-if="success">
             <div class="success-msg">
               <i class="fa fa-check"></i>
-              Success!
+              {{ t('success') }}!
             </div>
           </div>
           <div v-if="errorArray.length">
             <div class="error-msg">
               <i class="fa fa-times-circle"></i>
-              Errors!
+              {{ t('errors') }}!
             </div>
           </div>
         </div>
@@ -54,21 +54,22 @@ import Subject from "@/types/Subject";
 import {UserPost} from "@/types/UserPost";
 import UserChoice from "@/types/UserChoice";
 import UserServices from "@/services/UserServices";
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
   name: "PostWithCommentsComponent",
   components: {},
   data(){
-    const userId = 'bac4c5ba-91c5-4c9c-b0a8-023cf0728561';
+    const { t } = useI18n()
     const postId = this.$route.params.id;
     return{
+      t,
       userPost: {} as UserPost,
       errorArray: [] as string[],
       success: false as boolean,
       form:{
         commentText : '' as string,
         userPostId: postId,
-        appUserId: userId
       }
     }
   },

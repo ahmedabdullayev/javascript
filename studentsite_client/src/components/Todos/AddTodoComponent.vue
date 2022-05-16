@@ -9,8 +9,8 @@
       <thead>
       <tr>
         <th scope="col">Todo</th>
-        <th scope="col">Is Done?</th>
-        <th scope="col">Action</th>
+        <th scope="col">{{ t('isDone') }}</th>
+        <th scope="col">{{ t('action') }}</th>
       </tr>
       </thead>
       <tbody>
@@ -24,18 +24,18 @@
       </tr>
       </tbody>
     </table>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">{{ t('submit') }}</button>
   </form>
   <div v-if="success">
     <div class="success-msg">
       <i class="fa fa-check"></i>
-      Success!
+      {{ t('success') }}!
     </div>
   </div>
   <div v-if="errorArray.length">
     <div class="error-msg">
       <i class="fa fa-times-circle"></i>
-      Errors!
+      {{ t('errors') }}!
     </div>
   </div>
 </template>
@@ -46,12 +46,15 @@ import axios from "axios";
 import {UserPost} from "@/types/UserPost";
 import UserServices from "@/services/UserServices";
 import {Todo} from "@/types/Todo";
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
   name: "AddTodoComponent",
   components: {},
   data(){
+    const { t } = useI18n()
     return{
+      t,
       errorArray: [] as string[],
       success: false as boolean,
       todos: [] as Todo[],

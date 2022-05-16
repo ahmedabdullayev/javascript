@@ -1,26 +1,26 @@
 <template>
-  <h1>Add Question</h1>
+  <h1>{{ t('add-question') }}</h1>
   <form v-on:submit.prevent="submitForm">
     <div class="mb-3">
-      <label for="name" class="form-label text-right">Question Text</label>
+      <label for="name" class="form-label text-right">{{ t('question-text') }}</label>
       <input type="text" v-model="form.questionText" class="form-control" id="name">
     </div>
     <select class="form-select" v-model="form.quizId" id="listOfCategories">
-      <option value=""> Choose Quiz of that question</option>
+      <option value=""> {{ t('chooseQuizOfQues') }}</option>
       <option v-for="(quiz) in this.quizzes" :key="quiz.id" v-bind:value="quiz.id" >{{quiz.name}}</option>
     </select>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">{{ t('submit') }}</button>
   </form>
   <div v-if="success">
     <div class="success-msg">
       <i class="fa fa-check"></i>
-      Success!
+      {{ t('success') }}!
     </div>
   </div>
   <div v-if="errorArray.length">
     <div class="error-msg">
       <i class="fa fa-times-circle"></i>
-      Errors!
+      {{ t('errors') }}!
     </div>
   </div>
   <QuestionListAdminComponent ref="reloadData"></QuestionListAdminComponent>
@@ -32,12 +32,15 @@ import axios from "axios";
 import Quiz from "@/types/Quiz";
 import QuestionListAdminComponent from "@/components/QuestionListAdminComponent.vue";
 import UserServices from "@/services/UserServices";
+import {useI18n} from "vue-i18n";
 export default defineComponent({
   name: "AddQuestionComponent",
   components: {QuestionListAdminComponent},
 
   data(){
+    const { t } = useI18n()
     return{
+      t,
       errorArray: [] as string[],
       success: false as boolean,
       quizzes: [] as Quiz[],

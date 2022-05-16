@@ -3,9 +3,9 @@
     <thead>
     <tr>
       <th scope="col">id#</th>
-      <th scope="col">Topic name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Action</th>
+      <th scope="col">{{ t('topicName') }}</th>
+      <th scope="col">{{ t('description') }}</th>
+      <th scope="col">{{ t('action') }}</th>
     </tr>
     </thead>
     <tbody>
@@ -13,7 +13,7 @@
       <th scope="row">{{ topic.id }}</th>
       <td>{{ topic.name }}</td>
       <td>{{ topic.description }}</td>
-      <td><button type="button" class="btn btn-danger" v-on:click="deleteTopic(topic.id)">Delete</button></td>
+      <td><button type="button" class="btn btn-danger" v-on:click="deleteTopic(topic.id)">{{ t('delete') }}</button></td>
     </tr>
     </tbody>
   </table>
@@ -24,12 +24,15 @@ import {defineComponent} from "vue";
 import {Topic} from "@/types/Topic";
 import axios from "axios";
 import UserServices from "@/services/UserServices";
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
   name: "TopicListAdminComponent",
   components:{},
   data(){
+    const { t } = useI18n()
     return{
+      t,
       topics: [] as Topic[]
     }
   },

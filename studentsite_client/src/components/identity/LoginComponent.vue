@@ -1,15 +1,15 @@
 <template>
   <form v-on:submit.prevent="login">
     <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <label for="exampleInputEmail1" class="form-label">{{ $t('email') }}</label>
       <input type="email" v-model="form.email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else(maybe).</div>
+      <div id="emailHelp" class="form-text">{{ $t('never') }}</div>
     </div>
     <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <label for="exampleInputPassword1" class="form-label">{{ $t('pass') }}</label>
       <input type="password" v-model="form.password" class="form-control" id="exampleInputPassword1">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">{{ $t('submit') }}</button>
   </form>
 </template>
 

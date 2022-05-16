@@ -1,16 +1,16 @@
 <template>
-  {{this.isGuest}}
   <nav>
     <div v-if="isGuest == false">
     <AdminRoutes v-if="isUser == false"></AdminRoutes>
     <UserRoutes v-if="isUser == true"></UserRoutes>
-      <router-link to="/logout">Logout</router-link>
+      <router-link to="/logout">{{ t('logout') }}</router-link>
     </div>
     <div v-else>
-      <router-link to="/">Home</router-link>
-    | <router-link to="/login">Login</router-link>
-    | <router-link to="/register">Register</router-link>
+      <router-link to="/">{{ t('home') }}</router-link>
+    | <router-link to="/login">{{ t('login') }}</router-link>
+    | <router-link to="/register">{{ t('register') }}</router-link>
     </div>
+    <LangSwitcher></LangSwitcher>
   </nav>
   <router-view/>
 </template>
@@ -19,15 +19,16 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import UserServices from "@/services/UserServices";
-import {User} from "@/types/identity/User";
 import AdminRoutes from "@/views/headers/AdminRoutes.vue";
 import UserRoutes from "@/views/headers/UserRoutes.vue";
-import axios from "axios";
-import router from "@/router";
+import LangSwitcher from "@/components/LangSwitcher.vue";
+import {useI18n} from "vue-i18n";
 export default defineComponent({
-  components:{UserRoutes, AdminRoutes},
+  components:{UserRoutes, AdminRoutes, LangSwitcher},
   data(){
+    const { t } = useI18n()
     return{
+      t,
       isUser: true as boolean,
       isGuest: true as boolean
     }
@@ -35,11 +36,17 @@ export default defineComponent({
   methods:{
       async checkUser(){
           return UserServices.GetUserData()
-
+      },
+      checkLang(){
+        if(!localStorage.getItem("lang")){
+          localStorage.setItem("lang", "en")
+        }
+        this.$i18n!.locale = localStorage.getItem("lang") || "en";
       }
   },
   watch:{
     $route: async function () {
+      this.checkLang()
       let data = await this.checkUser()
       if (localStorage.getItem("user") == null) {
         this.isGuest = true;

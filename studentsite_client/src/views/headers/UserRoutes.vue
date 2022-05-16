@@ -1,17 +1,24 @@
 <template>
-  <router-link to="/">Home</router-link> |
-  <router-link to="/subjects">Subjects</router-link> |
-  <router-link to="/topics">Topics</router-link> |
-  <router-link to="/todos">Todos</router-link> |
-  <router-link to="/post-add">Add post</router-link> |
+  <router-link to="/">{{ t('home') }}</router-link> |
+  <router-link to="/subjects">{{ t('subjects') }}</router-link> |
+  <router-link to="/topics">{{ t('topics') }}</router-link> |
+  <router-link to="/todos">{{ t('todos') }}</router-link> |
+  <router-link to="/post-add">{{ t('add-post') }}</router-link> |
 
 </template>
 
 <script lang="ts">
 import {defineComponent} from "vue";
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
-  name: "userRoutes"
+  name: "userRoutes",
+  data(){
+    const { t } = useI18n()
+    return{
+      t,
+    }
+  }
 })
 </script>
 

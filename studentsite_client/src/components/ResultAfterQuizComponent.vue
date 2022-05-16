@@ -3,9 +3,9 @@
   <thead>
   <tr>
     <th scope="col">#</th>
-    <th scope="col">Question text</th>
-    <th scope="col">Your answer</th>
-    <th scope="col">Is it correct?</th>
+    <th scope="col">{{ t('question-text') }}</th>
+    <th scope="col">{{ t('yourAns') }}</th>
+    <th scope="col">{{ t('isCorrect') }}</th>
   </tr>
   </thead>
   <tbody>
@@ -24,11 +24,14 @@ import {defineComponent} from "vue";
 import UserQuiz from "../types/UserQuiz";
 import axios from "axios";
 import UserServices from "@/services/UserServices";
+import {useI18n} from "vue-i18n";
 export default defineComponent({
   name: "ResultAfterQuizComponent",
   components: {},
   data(){
+    const { t } = useI18n()
     return{
+      t,
       userQuiz: [] as UserQuiz[],
     }
   },

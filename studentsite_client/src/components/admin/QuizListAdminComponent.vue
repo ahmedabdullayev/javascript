@@ -3,10 +3,9 @@
     <thead>
     <tr>
       <th scope="col">id#</th>
-        <th scope="col">Quiz</th>
-        <th scope="col">Description</th>
-        <th scope="col">Is Ready?</th>
-      <th scope="col">Action</th>
+        <th scope="col">{{ t('quiz') }}</th>
+        <th scope="col">{{ t('description') }}</th>
+      <th scope="col">{{ t('action') }}</th>
     </tr>
     </thead>
     <tbody>
@@ -14,14 +13,7 @@
       <th scope="row">{{ quiz.id }}</th>
       <td>{{ quiz.name }}</td>
       <td>{{ quiz.description }}</td>
-      <td>
-        MAGMAS
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="flexCheckDefault" v-on:change="updateIt(quiz.id, quiz.isReady, quiz.name, quiz.description)" v-bind:checked="quiz.isReady">
-          <label class="form-check-label" for="flexCheckDefault">{{quiz.isReady}}</label>
-        </div>
-      </td>
-      <td><button type="button" class="btn btn-danger" v-on:click="deleteQuiz(quiz.id)">Delete</button></td>
+      <td><button type="button" class="btn btn-danger" v-on:click="deleteQuiz(quiz.id)">{{ t('delete') }}</button></td>
     </tr>
     </tbody>
   </table>
@@ -32,11 +24,14 @@ import {defineComponent} from "vue";
 import axios from "axios";
 import Quiz from "@/types/Quiz";
 import UserServices from "@/services/UserServices";
+import {useI18n} from "vue-i18n";
 export default defineComponent({
   name: "SubjectListAdminComponent",
   components:{},
   data(){
+    const { t } = useI18n()
     return{
+      t,
       errorArray: [] as string[],
       success: false as boolean,
       quizzes: [] as Quiz[]
@@ -60,12 +55,12 @@ export default defineComponent({
         console.log(this.quizzes)
       })
     },
-    async updateIt(id: string, ready: boolean, name: string, description: string){
+    //if need
+    async updateIt(id: string, name: string, description: string){
       let isDone = {
         id: id,
         name: name,
         description: description,
-        isReady: ready =! ready
       }
       let userPromise = await UserServices.RefreshToken();
       let conf = UserServices.AxiosJwt(userPromise.token)

@@ -1,31 +1,31 @@
 <template>
-  <h1>Add User Post</h1>
+  <h1>{{ t('addUserPost') }}</h1>
   <form v-on:submit.prevent="submitForm">
     <div class="mb-3">
-      <label for="title" class="form-label text-right">Title</label>
+      <label for="title" class="form-label text-right">{{ t('title') }}</label>
       <input type="text" v-model="form.title" class="form-control" id="title">
     </div>
     <div class="mb-3">
-      <label for="text" class="form-label">Text</label>
+      <label for="text" class="form-label">{{ t('text') }}</label>
       <input type="text" v-model="form.text" class="form-control" id="text">
     </div>
 
     <select class="form-select" v-model="form.topicId" id="listOfCategories">
-      <option value=""> Choose Topic of that post</option>
+      <option value=""> {{ t('chooseTopicOfPost') }}</option>
       <option v-for="(topic) in this.topics" :key="topic.id" v-bind:value="topic.id" >{{topic.name}}</option>
     </select>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">{{ t('submit') }}</button>
   </form>
   <div v-if="success">
     <div class="success-msg">
       <i class="fa fa-check"></i>
-      Success!
+      {{ t('success') }}!
     </div>
   </div>
   <div v-if="errorArray.length">
     <div class="error-msg">
       <i class="fa fa-times-circle"></i>
-      Errors!
+      {{ t('errors') }}!
     </div>
   </div>
 </template>
@@ -35,11 +35,14 @@ import {defineComponent} from "vue";
 import axios from "axios";
 import {Topic} from "../types/Topic";
 import UserServices from "@/services/UserServices";
+import {useI18n} from "vue-i18n";
 export default defineComponent({
   name: "AddUserPostComponent",
   components: {},
   data(){
+    const { t } = useI18n()
     return{
+      t,
       errorArray: [] as string[],
       success: false as boolean,
       topics: [] as Topic[],

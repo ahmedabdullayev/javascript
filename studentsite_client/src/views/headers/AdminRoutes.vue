@@ -1,23 +1,29 @@
 <template>
-  <router-link to="/">Home</router-link> |
-  <router-link to="/subjects">Subjects</router-link> |
-  <router-link to="/topics">Topics</router-link> |
-  <router-link to="/post-add">Add Post</router-link> |
-  <router-link to="/todos">Todos</router-link> |
-  <router-link to="/admin/add-subject">Add subject</router-link> |
-  <router-link to="/admin/add-quiz">Add quiz</router-link> |
-  <router-link to="/admin/add-question">Add question</router-link> |
-  <router-link to="/admin/add-answer">Add answer</router-link> |
-  <router-link to="/admin/add-topic">Add Topic</router-link> |
+  <router-link to="/">{{ t('home') }}</router-link> |
+  <router-link to="/subjects">{{ t('subjects') }}</router-link> |
+  <router-link to="/topics">{{ t('topics') }}</router-link> |
+  <router-link to="/post-add">{{ t('add-post') }}</router-link> |
+  <router-link to="/todos">{{ t('todos') }}</router-link> |
+  <router-link to="/admin/add-subject">{{ t('add-subject') }}</router-link> |
+  <router-link to="/admin/add-quiz">{{ t('add-quiz') }}</router-link> |
+  <router-link to="/admin/add-question">{{ t('add-question') }}</router-link> |
+  <router-link to="/admin/add-answer">{{ t('add-answer') }}</router-link> |
+  <router-link to="/admin/add-topic">{{ t('add-topic') }}</router-link> |
 
 
 </template>
 
 <script lang="ts">
  import {defineComponent} from "vue";
+ import {useI18n} from "vue-i18n";
  export default defineComponent({
-
-   name: "AdminRoutes"
+   name: "AdminRoutes",
+   data(){
+     const { t } = useI18n()
+     return{
+       t,
+     }
+   }
 })
 </script>
 

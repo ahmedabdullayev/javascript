@@ -4,7 +4,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ quiz.name }}</h5>
         <p class="card-text">{{ quiz.description }}</p>
-        <button class="btn btn-primary" v-on:click="startQuiz(quiz.id)">Start the quiz </button>
+        <button class="btn btn-primary" v-on:click="startQuiz(quiz.id)">{{ t('startQuiz') }} </button>
       </div>
     </div>
   </div>
@@ -17,12 +17,14 @@ import Subject from "@/types/Subject";
 import UserQuiz from "@/types/UserQuiz";
 import router from "@/router";
 import UserServices from "@/services/UserServices";
+import {useI18n} from "vue-i18n";
 export default defineComponent({
   name: "QuizzesListComponent",
   components: {},
   data(){
-    // const userId = 'bac4c5ba-91c5-4c9c-b0a8-023cf0728561';
+    const { t } = useI18n()
     return{
+      t,
       subjects: [] as Subject[],
       userQuiz: {} as UserQuiz,
       form:{

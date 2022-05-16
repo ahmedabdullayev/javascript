@@ -3,9 +3,9 @@
     <thead>
     <tr>
       <th scope="col">id#</th>
-      <th scope="col">Subject name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Action</th>
+      <th scope="col">{{ t('subj-name') }}</th>
+      <th scope="col">{{ t('description') }}</th>
+      <th scope="col">{{ t('action') }}</th>
     </tr>
     </thead>
     <tbody>
@@ -14,53 +14,53 @@
       <td>{{ subj.name }}</td>
       <td>{{ subj.description }}</td>
       <td>
-        <button type="button" class="btn btn-danger" v-on:click="deleteSubject(subj.id)">Delete</button>
+        <button type="button" class="btn btn-danger" v-on:click="deleteSubject(subj.id)">{{ t('delete') }}</button>
 
         <div class="accordion accordion-flush" :id="`accordionFlushExample${subj.id}`">
           <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingOne">
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="`#flush-collapseOne${subj.id}`" aria-expanded="false" aria-controls="flush-collapseOne">
-                Update on Estonian and Russian
+                {{ t('updateOn') }}
               </button>
             </h2>
             <div :id="`flush-collapseOne${subj.id}`" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" :data-bs-parent="`#accordionFlushExample${subj.id}`">
               <div class="accordion-body">
-                <h1>Update Subject On Estonian</h1>
+                <h1>{{ t('updateOnEst') }}</h1>
                 <form v-on:submit.prevent="updateSubjectOnEstonian(subj.id)">
                   <div class="mb-3">
-                    <label for="nameET" class="form-label text-right">Name</label>
+                    <label for="nameET" class="form-label text-right">{{ t('name') }}</label>
                     <input type="text" v-model="formET.name" class="form-control" id="nameET">
                   </div>
                   <div class="mb-3">
-                    <label for="descriptionET" class="form-label">Description</label>
+                    <label for="descriptionET" class="form-label">{{ t('description') }}</label>
                     <input type="text" v-model="formET.description" class="form-control" id="descriptionET">
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">{{ t('submit') }}</button>
                 </form>
 
-                <h1>Update Subject On Russian</h1>
+                <h1>{{ t('updateOnRus') }}</h1>
                 <form v-on:submit.prevent="updateSubjectOnRussian(subj.id)">
                   <div class="mb-3">
-                    <label for="nameRU" class="form-label text-right">Name</label>
+                    <label for="nameRU" class="form-label text-right">{{ t('name') }}</label>
                     <input type="text" v-model="formRU.name" class="form-control" id="nameRU">
                   </div>
                   <div class="mb-3">
-                    <label for="descriptionRU" class="form-label">Description</label>
+                    <label for="descriptionRU" class="form-label">{{ t('description') }}</label>
                     <input type="text" v-model="formRU.description" class="form-control" id="descriptionRU">
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">{{ t('submit') }}</button>
                 </form>
 
                 <div v-if="success">
                   <div class="success-msg">
                     <i class="fa fa-check"></i>
-                    Success!
+                    {{ t('success') }}!
                   </div>
                 </div>
                 <div v-if="errorArray.length">
                   <div class="error-msg">
                     <i class="fa fa-times-circle"></i>
-                    Errors!
+                    {{ t('errors') }}!
                   </div>
                 </div>
 
@@ -84,12 +84,15 @@ import {defineComponent} from "vue";
 import axios from "axios";
 import Subject from "@/types/Subject";
 import UserServices from "@/services/UserServices";
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
   name: "SubjectListAdminComponent",
   components:{},
   data(){
+    const { t } = useI18n()
     return{
+      t,
       errorArray: [] as string[],
       success: false as boolean,
       subjects: [] as Subject[],

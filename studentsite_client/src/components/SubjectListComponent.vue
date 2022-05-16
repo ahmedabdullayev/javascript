@@ -4,7 +4,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ subj.name }}</h5>
         <p class="card-text">{{ subj.description }}</p>
-        <router-link class="btn btn-primary" :to="`/subject/${subj.name}/quizzes/${subj.id}`">Check quizzes</router-link>
+        <router-link class="btn btn-primary" :to="`/subject/${subj.name}/quizzes/${subj.id}`">{{ t('check-quizzes') }}</router-link>
       </div>
     </div>
   </div>
@@ -15,12 +15,15 @@ import {defineComponent} from "vue";
 import axios from "axios";
 import Subject from "@/types/Subject";
 import UserServices from "@/services/UserServices";
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
   name: "SubjectListComponent",
   components: {},
   data(){
+    const { t } = useI18n()
     return{
+      t,
       subjects: [] as Subject[],
     }
   },

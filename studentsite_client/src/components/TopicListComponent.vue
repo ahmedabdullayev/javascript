@@ -4,7 +4,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ topic.name }}</h5>
         <p class="card-text">{{ topic.description }}</p>
-        <router-link class="btn btn-primary" :to="`/topic/${topic.id}`">Posts</router-link>
+        <router-link class="btn btn-primary" :to="`/topic/${topic.id}`">{{ t('posts') }}</router-link>
       </div>
     </div>
   </div>
@@ -15,12 +15,15 @@ import {defineComponent} from "vue";
 import {Topic} from "@/types/Topic";
 import axios from "axios";
 import UserServices from "@/services/UserServices";
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
   name: "TopicListAdminComponent",
   components:{},
   data(){
+    const { t } = useI18n()
     return{
+      t,
       topics: [] as Topic[]
     }
   },
