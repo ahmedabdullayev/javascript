@@ -31,7 +31,8 @@ export default defineComponent({
     async getTopics(){
       let userPromise = await UserServices.RefreshToken();
       let conf = UserServices.AxiosJwt(userPromise.token)
-      await axios.get('Topic/GetTopics', conf).then((res) => {
+      let lang = UserServices.GetCulture()
+      await axios.get('Topic/GetTopics' + lang, conf).then((res) => {
         this.topics = res.data as Topic[]
         console.log(this.topics)
       })

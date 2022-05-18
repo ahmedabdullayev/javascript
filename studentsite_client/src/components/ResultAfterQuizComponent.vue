@@ -39,7 +39,8 @@ export default defineComponent({
     async getResults(){
       let userPromise = await UserServices.RefreshToken();
       let conf = UserServices.AxiosJwt(userPromise.token)
-      await axios.get('UserQuiz/GetUserQuiz/' + this.$route.params.userQuizId, conf)
+      let lang = UserServices.GetCulture()
+      await axios.get('UserQuiz/GetUserQuiz/' + this.$route.params.userQuizId + lang, conf)
           .then((res) => {
             this.userQuiz = res.data as UserQuiz[]
           })

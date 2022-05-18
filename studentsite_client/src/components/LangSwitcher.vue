@@ -21,7 +21,13 @@ export default defineComponent({
     handleChange(){
       localStorage.setItem("lang", this.lang)
       this.$i18n.locale = localStorage.getItem("lang") || "en-GB";
-      // this.$router.go(0)
+
+      if(this.$route.name == "subjects" || this.$route.name == "topics"
+      || this.$route.name == "topicswithposts" || this.$route.name == "subjects-quizzes"
+      || this.$route.name == "userQuizFlow" || this.$route.name == "ResultsView"){
+        this.$router.go(0)
+      }
+
     }
   }
 })

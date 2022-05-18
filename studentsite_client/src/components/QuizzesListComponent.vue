@@ -48,7 +48,8 @@ export default defineComponent({
   async mounted(){
     let userPromise = await UserServices.RefreshToken();
     let conf = UserServices.AxiosJwt(userPromise.token)
-    await axios.get('Subjects/GetSubject/' + this.$route.params.id, conf)
+    let lang = UserServices.GetCulture()
+    await axios.get('Subjects/GetSubject/' + this.$route.params.id + lang, conf)
         .then((res) => {
           this.subjects = res.data as Subject[]
         })
