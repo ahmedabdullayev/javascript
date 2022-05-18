@@ -29,6 +29,8 @@
       {{ t('errors') }}
     </div>
   </div>
+  <AnswerListAdminComponent ref="reloadData"></AnswerListAdminComponent>
+
 </template>
 
 <script lang="ts">
@@ -37,9 +39,10 @@ import axios from "axios";
 import Question from "@/types/Question";
 import UserServices from "@/services/UserServices";
 import {useI18n} from "vue-i18n";
+import AnswerListAdminComponent from "@/components/admin/AnswerListAdminComponent.vue";
 export default defineComponent({
   name: "AddAnswerComponent",
-  components: {},
+  components: {AnswerListAdminComponent},
   data(){
     const { t } = useI18n()
     return{
@@ -67,6 +70,8 @@ export default defineComponent({
           .then((res) =>{
             this.errorArray = []
             this.success = true
+            let call = (this.$refs.reloadData as InstanceType<typeof AnswerListAdminComponent>).getAnswers()
+
           })
           .catch((error) =>{
             this.errorArray.push(error);

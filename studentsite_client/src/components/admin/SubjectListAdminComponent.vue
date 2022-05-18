@@ -70,7 +70,6 @@
         </div>
         <br>
       </td>
-<!--      <td><button type="button" class="btn btn-danger" v-on:click="deleteSubject(subj.id)">Delete</button></td>-->
     </tr>
     </tbody>
   </table>

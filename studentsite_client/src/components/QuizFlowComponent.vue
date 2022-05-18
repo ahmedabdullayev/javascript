@@ -61,7 +61,8 @@ export default defineComponent({
     async getQuestionWithAnswers(){
       let userPromise = await UserServices.RefreshToken();
       let conf = UserServices.AxiosJwt(userPromise.token)
-        await axios.get('Question/GetQuestion/' + this.userChoice.questionId, conf)
+      let lang = UserServices.GetCulture();
+        await axios.get('Question/GetQuestion/' + this.userChoice.questionId + lang, conf)
             .then(res => {
               return res.data
             }).then(data =>{

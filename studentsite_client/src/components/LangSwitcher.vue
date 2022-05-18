@@ -21,6 +21,7 @@ export default defineComponent({
     handleChange(){
       localStorage.setItem("lang", this.lang)
       this.$i18n.locale = localStorage.getItem("lang") || "en-GB";
+      // this.$router.go(0)
     }
   }
 })

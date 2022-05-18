@@ -22,18 +22,20 @@ export default class UserServices {
             refreshToken: userData.refreshToken
         }
         console.log("HELLO!")
-        await this.delay(600)
+        await this.delay(1100)
         const data = await axios.post('identity/account/refreshtoken', requestData)
             .then(res => {
                 return res.data as User
             }).then(data => {
                 return data as User
             })
+        await this.delay(100)
         await this.SaveUserData(data as User)
         return data
     }
 
     static delay(time : number) {
+        console.warn("DELAUT")
         return new Promise(resolve => setTimeout(resolve, time));
     }
 
@@ -46,5 +48,10 @@ export default class UserServices {
             }
         };
         return config;
+    }
+
+    static GetCulture() : string{
+        const lang = localStorage.getItem("lang");
+        return lang ? '?culture='+lang : '';
     }
 }

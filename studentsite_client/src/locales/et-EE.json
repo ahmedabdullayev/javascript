@@ -51,5 +51,11 @@
   "never": "Me ei jaga kunagi teie e-posti kellegi teisega (võib-olla).",
   "pass": "Salasõna",
   "firstname": "Eesnimi",
-  "lastname": "Perekonnanimi"
+  "lastname": "Perekonnanimi",
+  "isDone": "Kas see on tehtud?",
+  "addUserPost": "Kasutajapostituse lisamine",
+  "title": "Pealkiri",
+  "text": "Tekst",
+  "add-answer": "Vastuse lisamine",
+  "answer-text": "Tekstile vastamine"
 }

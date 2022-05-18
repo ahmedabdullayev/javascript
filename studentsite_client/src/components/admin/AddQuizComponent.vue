@@ -29,10 +29,11 @@
     </div>
   </div>
   <QuizListAdminComponent ref="reloadData"></QuizListAdminComponent>
+<!--  <AsyncComponent ref="reloadData"></AsyncComponent>-->
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineAsyncComponent, defineComponent} from "vue";
 import axios from "axios";
 import Subject from "@/types/Subject";
 import UserServices from "@/services/UserServices";
@@ -84,7 +85,8 @@ export default defineComponent({
     .then((res) => {
       this.subjects = res.data as Subject[]
     })
-  }
+  },
+
 })
 </script>
 

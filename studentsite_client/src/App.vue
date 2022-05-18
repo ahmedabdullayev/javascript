@@ -39,9 +39,9 @@ export default defineComponent({
       },
       checkLang(){
         if(!localStorage.getItem("lang")){
-          localStorage.setItem("lang", "en")
+          localStorage.setItem("lang", "en-GB")
         }
-        this.$i18n!.locale = localStorage.getItem("lang") || "en";
+        this.$i18n!.locale = localStorage.getItem("lang") || "en-GB";
       }
   },
   watch:{

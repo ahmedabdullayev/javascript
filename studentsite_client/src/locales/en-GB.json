@@ -24,8 +24,8 @@
   "description": "Description",
   "action": "Action",
   "updateOn": "Update on Estonian and Russian",
-  "updateOnEst": "Update Subject On Estonian",
-  "updateOnRus": "Update Subject On Russian",
+  "updateOnEst": "Update On Estonian",
+  "updateOnRus": "Update On Russian",
   "delete": "Delete",
   "name": "Name",
   "submit": "Submit",
@@ -57,5 +57,6 @@
   "addUserPost": "Add user post",
   "title": "Title",
   "text": "Text",
-  "add-answer": "Add answer"
+  "add-answer": "Add answer",
+  "answer-text": "Answer text"
 }
