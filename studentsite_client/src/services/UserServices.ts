@@ -22,7 +22,7 @@ export default class UserServices {
             refreshToken: userData.refreshToken
         }
         console.log("HELLO!")
-        await this.delay(1100)
+        await this.delay(500)
         const data = await axios.post('identity/account/refreshtoken', requestData)
             .then(res => {
                 return res.data as User
